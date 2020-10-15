@@ -39,8 +39,8 @@ function sayCommand(sender, flags, args) {
 
   let message = ''
 
-  if (flags.showsender) message += sender + "> "
-  if (flags.color) message += '§' + flags.color[0]
+  if (flags.showsender) message += sender + ": "
+  if (flags.color) message += '&' + flags.color[0]
 
   message += args.join(' ')
   bot.chat(message)
@@ -55,7 +55,7 @@ bot.once('cmd_ready', () => {
 // And listen for command inputs from any source
 // Let's listen for chat events that start with "!"
 bot.on('chat', (username, message) => {
-  if (message.startsWidth('!')) {
+  if (message.startsWith('!')) {
     const command = message.substring(1)
     bot.cmd.run(username, command) // Run with the sender and the command itself
   }
