@@ -40,7 +40,7 @@ export function extractElements(tokens: string[], command: Command): CommandElem
             if (i + argCount >= tokens.length) throw new Error(`${flagName} expects ${argCount} arguments. ${i + argCount - tokens.length + 1} provided.`)
 
             const flag: string[] = [];
-            for (let j = i + 1; j <= i + argCount; i++)
+            for (let j = i + 1; j <= i + argCount; j++)
                 flag.push(tokens[j]);
 
             // @ts-ignore
