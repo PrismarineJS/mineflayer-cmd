@@ -1,5 +1,11 @@
+if (process.argv.length < 4 || process.argv.length > 6) {
+  console.log('Usage : node speakerBot.js <host> <port> [<name>] [<password>]')
+  process.exit(1)
+}
+
 // Create your bot
 const mineflayer = require("mineflayer");
+
 const bot = mineflayer.createBot({
   host: process.argv[2],
   port: process.argv[3],
