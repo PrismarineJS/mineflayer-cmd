@@ -1,13 +1,13 @@
-<h1 align="center">mineflayer-plugin-template</h1>
-<p align="center"><i>A simple template repository for developing Mineflayer plugins through Typescript.</i></p>
+<h1 align="center">mineflayer-cmd</h1>
+<p align="center"><i>A simple command manager and handler for Mineflayer plugins.</i></p>
 
 <p align="center">
-  <img src="https://github.com/TheDudeFromCI/mineflayer-plugin-template/workflows/Build/badge.svg" />
-  <img src="https://img.shields.io/npm/v/mineflayer-plugin-template" />
-  <img src="https://img.shields.io/github/repo-size/TheDudeFromCI/mineflayer-plugin-template" />
-  <img src="https://img.shields.io/npm/dm/mineflayer-plugin-template" />
-  <img src="https://img.shields.io/github/contributors/TheDudeFromCI/mineflayer-plugin-template" />
-  <img src="https://img.shields.io/github/license/TheDudeFromCI/mineflayer-plugin-template" />
+  <img src="https://github.com/TheDudeFromCI/mineflayer-cmd/workflows/Build/badge.svg" />
+  <img src="https://img.shields.io/npm/v/mineflayer-cmd" />
+  <img src="https://img.shields.io/github/repo-size/TheDudeFromCI/mineflayer-cmd" />
+  <img src="https://img.shields.io/npm/dm/mineflayer-cmd" />
+  <img src="https://img.shields.io/github/contributors/TheDudeFromCI/mineflayer-cmd" />
+  <img src="https://img.shields.io/github/license/TheDudeFromCI/mineflayer-cmd" />
 </p>
 
 ---
@@ -16,33 +16,61 @@
 
 This plugin is built using Node and can be installed using:
 ```bash
-npm install --save mineflayer-plugin-template
+npm install --save mineflayer-cmd
 ```
-
-This plugin has a relies on [random-plugin]() for a-b-c. That plugin should be loaded first.
 
 ### Simple Bot
 
-The brief description goes here.
+Loading the plugin can be done the same as any other plugin. Commands can also be loaded at any time.
 
 ```js
 // Create your bot
 const mineflayer = require("mineflayer");
 const bot = mineflayer.createBot({ username: "Player" });
 
-// Do stuff
-bot.doStuff()
+// Load the cmd plugin
+const cmd = require('mineflayer-cmd').plugin
+
+cmd.allowConsoleInput = true // Optional config argument
+bot.loadPlugin(cmd)
+
+// Register your custom command handlers, if desired (plugins can load them too)
+function sayCommand(sender, flags, args) {
+
+  let message = ''
+
+  if (flags.showsender) message += sender + "> "
+  if (flags.color) message += '§' + flags.color[0]
+
+  message += args.join(' ')
+  bot.chat(message)
+}
+
+bot.once('cmd_ready', () => {
+  bot.cmd.registerCommand('say', sayCommand) // Create a new command called 'say' and set the executor function
+         .addFlag('color', 1) // Add a flag called 'color' that expects 1 input
+         .addFlag('showsender', 0) // Add a flag called 'showsender' that expects 0 inputs
+})
+
+// And listen for command inputs from any source
+// Let's listen for chat events that start with "!"
+bot.on('chat', (username, message) => {
+  if (message.startsWidth('!')) {
+    const command = message.substring(1)
+    bot.cmd.run(username, command) // Run with the sender and the command itself
+  }
+})
 ```
 
 ### Documentation
 
-[API](https://github.com/TheDudeFromCI/mineflayer-plugin-template/blob/master/docs/api.md)
+[API](https://github.com/TheDudeFromCI/mineflayer-cmd/blob/master/docs/api.md)
 
-[Examples](https://github.com/TheDudeFromCI/mineflayer-plugin-template/tree/master/examples)
+[Examples](https://github.com/TheDudeFromCI/mineflayer-cmd/tree/master/examples)
 
 ### License
 
-This project uses the [MIT](https://github.com/TheDudeFromCI/mineflayer-plugin-template/blob/master/LICENSE) license.
+This project uses the [MIT](https://github.com/TheDudeFromCI/mineflayer-cmd/blob/master/LICENSE) license.
 
 ### Contributions
 
