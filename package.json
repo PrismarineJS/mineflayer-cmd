@@ -27,9 +27,9 @@
     "mineflayer": "^2.31.0"
   },
   "devDependencies": {
-    "@types/node": "14.14.7",
+    "@types/node": "^14.14.7",
     "require-self": "^0.2.3",
-    "typescript": "4.0.5"
+    "typescript": "^4.0.5"
   },
   "files": [
     "lib/**/*"
