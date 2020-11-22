@@ -9,9 +9,9 @@ export class CommandManager
 {
     private readonly commands: Command[] = [];
 
-    registerCommand(cmdName: string, handler: CommandHandler): Command
+    registerCommand(cmdName: string, handler: CommandHandler, help: string = ""): Command
     {
-        const command = new Command(cmdName, handler);
+        const command = new Command(cmdName, handler, help);
         this.commands.push(command);
         return command;
     }
