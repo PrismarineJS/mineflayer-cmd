@@ -3,17 +3,23 @@ import { parseTokens, extractElements } from './Tokenizer';
 
 export type Callback = (err?: Error) => void;
 export type CommandHandler = (sender: string, flags: any, args: string[], cb: Callback) => void;
-
+export type Logger = (sender: string, message: string) => void;
 
 export class CommandManager
 {
-    private readonly commands: Command[] = [];
+    readonly commands: Command[] = [];
+
+    log: Logger = (sender, message) => console.log(message);
 
     registerCommand(cmdName: string, handler: CommandHandler, help: string = ""): Command
     {
         const command = new Command(cmdName, handler, help);
         this.commands.push(command);
         return command;
+    }
+
+    setLogger(logger: Logger): void {
+        this.log = logger;
     }
 
     run(sender: string, command: string, cb: Callback): void
