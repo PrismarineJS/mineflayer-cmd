@@ -4,14 +4,16 @@ export class Command
 {
     readonly name: string;
     readonly handler: CommandHandler;
-    readonly help: string = "";
+    readonly help: string;
     readonly flags: Flag[] = [];
+    readonly usage: string;
 
-    constructor(name: string, handler: CommandHandler, help: string)
+    constructor(name: string, handler: CommandHandler, help: string, usage: string)
     {
         this.name = name;
         this.handler = handler;
         this.help = help;
+        this.usage = usage;
     }
 
     addFlag(name: string, argCount: number, argNames: string[] = [], help: string = ''): Command

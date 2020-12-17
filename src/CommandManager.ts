@@ -11,9 +11,13 @@ export class CommandManager
 
     log: Logger = (sender, message) => console.log(message);
 
-    registerCommand(cmdName: string, handler: CommandHandler, help: string = ""): Command
+    registerCommand(cmdName: string, handler: CommandHandler, help: string = "", usage: string = ""): Command
     {
-        const command = new Command(cmdName, handler, help);
+        if (help === '' || usage === '') {
+            console.warn(`[mineflayer-cmd] Note that leaving command description and usage information is not recommended. (Effected command: '${cmdName}')`);
+        }
+
+        const command = new Command(cmdName, handler, help, usage);
         this.commands.push(command);
         return command;
     }

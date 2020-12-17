@@ -8,6 +8,7 @@ export default function(cmdManager: CommandManager) {
 
         function listHelpFor(cmd: Command) {
             log(`${cmd.name} - ${cmd.help}`);
+            log(`  Usage: ${cmd.usage}`)
             for (const flag of cmd.flags) {
                 log(`  ${flag.usage}`);
             }
@@ -38,5 +39,5 @@ export default function(cmdManager: CommandManager) {
         cb();
     }
 
-    cmdManager.registerCommand('help', helpCommand);
+    cmdManager.registerCommand('help', helpCommand, 'Lists a description and usage information for all commands.');
 }
