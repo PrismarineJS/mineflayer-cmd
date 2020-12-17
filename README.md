@@ -49,7 +49,9 @@ function sayCommand(sender, flags, args, cb) {
 }
 
 bot.once('cmd_ready', () => {
-  bot.cmd.registerCommand('say', sayCommand) // Create a new command called 'say' and set the executor function
+  bot.cmd.registerCommand('say', sayCommand, // Create a new command called 'say' and set the executor function
+            'make me say something', // help text
+            'say <message>') // usage text
          .addFlag('color', 1) // Add a flag called 'color' that expects 1 input
          .addFlag('showsender', 0) // Add a flag called 'showsender' that expects 0 inputs
 })
