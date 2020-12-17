@@ -5,7 +5,7 @@ import helpCmd from './cmds/Help';
 
 export function plugin(bot: Bot): void
 {
-    const cmdManager = new CommandManager();
+    const cmdManager = new CommandManager(bot);
 
     // @ts-ignore
     bot.cmd = cmdManager

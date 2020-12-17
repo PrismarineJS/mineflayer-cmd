@@ -1,3 +1,4 @@
+import { Bot } from 'mineflayer';
 import { Command } from './Command';
 import { parseTokens, extractElements } from './Tokenizer';
 
@@ -8,8 +9,14 @@ export type Logger = (sender: string, message: string) => void;
 export class CommandManager
 {
     readonly commands: Command[] = [];
+    log: Logger;
 
-    log: Logger = (sender, message) => console.log(message);
+    constructor (bot: Bot) {
+        this.log = (sender, message) => {
+            if (sender === '[CONSOLE]') console.log(message);
+            else bot.chat(message);
+        }
+    }
 
     registerCommand(cmdName: string, handler: CommandHandler, help: string = "", usage: string = ""): Command
     {
