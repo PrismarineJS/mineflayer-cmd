@@ -9,8 +9,12 @@ export default function(cmdManager: CommandManager) {
         function listHelpFor(cmd: Command) {
             log(`${cmd.name} - ${cmd.help}`);
             log(`  Usage: ${cmd.usage}`)
-            for (const flag of cmd.flags) {
-                log(`  ${flag.usage}`);
+
+            if (cmd.flags.length > 0) {
+                log(`  Flags:`)
+                for (const flag of cmd.flags) {
+                    log(`  ${flag.usage}`);
+                }
             }
         }
 
