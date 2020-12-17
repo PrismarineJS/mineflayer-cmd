@@ -3,7 +3,7 @@ import { Callback, CommandManager } from "../CommandManager"
 
 export default function(cmdManager: CommandManager) {
 
-    function helpCommand(sender: string, flags: any, args: string[], cb: Callback) {
+    function helpCommand(sender: string, _flags: any, args: string[], cb: Callback) {
         const log = (msg: string) => cmdManager.log(sender, msg);
 
         function listHelpFor(cmd: Command) {
@@ -33,11 +33,13 @@ export default function(cmdManager: CommandManager) {
                 listHelpFor(cmd);
             }
         } else {
-            log('Usage: /help [command]');
+            log('Usage: help [command name]');
         }
 
         cb();
     }
 
-    cmdManager.registerCommand('help', helpCommand, 'Lists a description and usage information for all commands.');
+    cmdManager.registerCommand('help', helpCommand,
+        'Lists a description and usage information for all commands.',
+        'help [command name]');
 }
