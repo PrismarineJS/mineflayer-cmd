@@ -22,7 +22,7 @@ export class CommandManager
         this.log = logger;
     }
 
-    run(sender: string, command: string, cb: Callback): void
+    run(sender: string, command: string, cb: Callback = () => {}): void
     {
         const tokens = parseTokens(command);
 
