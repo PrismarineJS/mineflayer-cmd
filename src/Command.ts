@@ -14,15 +14,37 @@ export class Command
         this.help = help;
     }
 
-    addFlag(name: string, argCount: number): Command
+    addFlag(name: string, argCount: number, argNames: string[] = [], help: string = ''): Command
     {
-        this.flags.push({ name, argCount });
+        while (argNames.length < argCount)
+            argNames.push('arg' + argNames.length);
+
+        this.flags.push(new Flag(name, argCount, argNames, help));
         return this;
     }
 }
 
-interface Flag
+class Flag
 {
-    name: string;
-    argCount: number;
+    readonly name: string;
+    readonly argCount: number;
+    readonly argNames: string[];
+    readonly help: string;
+
+    constructor(name: string, argCount: number, argNames: string[], help: string){
+        this.name = name;
+        this.argCount = argCount;
+        this.argNames = argNames;
+        this.help = help;
+    }
+
+    get usage() {
+        let usage = `--${this.name}`
+
+        for (let i = 0; i < this.argCount; i++)
+            usage += ` <${this.argNames[i]}>`
+
+        usage += ` - ${this.help}`
+        return usage;
+    }
 }
