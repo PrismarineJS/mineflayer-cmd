@@ -1,22 +1,39 @@
+import { Bot } from 'mineflayer';
 import { Command } from './Command';
 import { parseTokens, extractElements } from './Tokenizer';
 
 export type Callback = (err?: Error) => void;
 export type CommandHandler = (sender: string, flags: any, args: string[], cb: Callback) => void;
-
+export type Logger = (sender: string, message: string) => void;
 
 export class CommandManager
 {
-    private readonly commands: Command[] = [];
+    readonly commands: Command[] = [];
+    log: Logger;
 
-    registerCommand(cmdName: string, handler: CommandHandler, help: string = ""): Command
+    constructor (bot: Bot) {
+        this.log = (sender, message) => {
+            if (sender === '[CONSOLE]') console.log(message);
+            else bot.chat(message);
+        }
+    }
+
+    registerCommand(cmdName: string, handler: CommandHandler, help: string = "", usage: string = ""): Command
     {
-        const command = new Command(cmdName, handler, help);
+        if (help === '' || usage === '') {
+            console.warn(`[mineflayer-cmd] Note that leaving command description and usage information is not recommended. (Effected command: '${cmdName}')`);
+        }
+
+        const command = new Command(cmdName, handler, help, usage);
         this.commands.push(command);
         return command;
     }
 
-    run(sender: string, command: string, cb: Callback): void
+    setLogger(logger: Logger): void {
+        this.log = logger;
+    }
+
+    run(sender: string, command: string, cb: Callback = () => {}): void
     {
         const tokens = parseTokens(command);
 
