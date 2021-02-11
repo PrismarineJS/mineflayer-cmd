@@ -11,7 +11,10 @@ export function startConsoleInput(bot: Bot)
 
         rl.on('line', (input) => {
             // @ts-ignore
-            bot.cmd.run('[CONSOLE]', input);
+            bot.cmd.run('[CONSOLE]', input, (err) => {
+                if (!err) return
+                bot.cmd.log('[CONSOLE]', err.message)
+            })
         });
     });
 }
