@@ -13,6 +13,8 @@ export function startConsoleInput(bot: Bot)
             // @ts-ignore
             bot.cmd.run('[CONSOLE]', input, (err) => {
                 if (!err) return
+
+                // @ts-ignore
                 bot.cmd.log('[CONSOLE]', err.message)
             })
         });
