@@ -19,6 +19,6 @@ export function startConsoleInput(bot: Bot)
             })
         });
         
-        bot.once('end' () => rl.close())
+        bot.once('end', () => rl.close())
     });
 }
