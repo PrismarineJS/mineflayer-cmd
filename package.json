@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/TheDudeFromCI/mineflayer-cmd#readme",
   "dependencies": {
-    "mineflayer": "^2.31.0"
+    "mineflayer": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.7",
