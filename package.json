@@ -1,6 +1,6 @@
 {
   "name": "mineflayer-cmd",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A simple command handler plugin for Mineflayer.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
