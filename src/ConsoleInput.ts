@@ -18,5 +18,7 @@ export function startConsoleInput(bot: Bot)
                 bot.cmd.log('[CONSOLE]', err.message)
             })
         });
+        
+        bot.once('end', () => rl.close())
     });
 }
