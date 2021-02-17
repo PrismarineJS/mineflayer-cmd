@@ -35,17 +35,17 @@ cmd.allowConsoleInput = true // Optional config argument
 bot.loadPlugin(cmd)
 
 // Register your custom command handlers, if desired (plugins can load them too)
-function sayCommand(sender, flags, args, cb) {
+function sayCommand(sender, flags, args): Promise<void> {
+  return new Promise((resolve, reject) => {
+    let message = ''
 
-  let message = ''
+    if (flags.showsender) message += sender + ": "
+    if (flags.color) message += '&' + flags.color[0]
 
-  if (flags.showsender) message += sender + ": "
-  if (flags.color) message += '&' + flags.color[0]
-
-  message += args.join(' ')
-  bot.chat(message)
-
-  cb()
+    message += args.join(' ')
+    bot.chat(message)
+    resolve()
+  })  
 }
 
 bot.once('cmd_ready', () => {

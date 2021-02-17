@@ -2,8 +2,7 @@ import { Bot } from 'mineflayer';
 import { Command } from './Command';
 import { parseTokens, extractElements } from './Tokenizer';
 
-export type Callback = (err?: Error) => void;
-export type CommandHandler = (sender: string, flags: any, args: string[], cb: Callback) => void;
+export type CommandHandler = (sender: string, flags: any, args: string[]) => void;
 export type Logger = (sender: string, message: string) => void;
 
 export class CommandManager
@@ -33,32 +32,22 @@ export class CommandManager
         this.log = logger;
     }
 
-    run(sender: string, command: string, cb: Callback = () => {}): void
+    async run(sender: string, command: string): Promise<void>
     {
         const tokens = parseTokens(command);
 
         if (tokens.length === 0)
         {
-            cb(new Error("Cannot parse empty string!"));
-            return;
+            throw new Error("Cannot parse empty string!");
         }
 
         const cmd = this.commands.find(c => c.name === tokens[0]);
 
         if (!cmd)
         {
-            cb(new Error("Command not found!"));
-            return;
+            throw new Error("Command not found!")
         }
-
-        try
-        {
-            const { flags, args } = extractElements(tokens, cmd);
-            cmd.handler(sender, flags, args, cb);
-        }
-        catch (err)
-        {
-            cb(err)
-        }
+        const { flags, args } = extractElements(tokens, cmd);
+        return cmd.handler(sender, flags, args);
     }
 }
